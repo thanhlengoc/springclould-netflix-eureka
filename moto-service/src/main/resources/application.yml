@@ -1,0 +1,10 @@
+server:
+    port: 8091
+spring:
+    application:
+        name: moto-service
+
+eureka:
+    client:
+        fetch-registry: true
+        register-with-eureka: true

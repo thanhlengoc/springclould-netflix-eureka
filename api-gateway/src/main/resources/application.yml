@@ -1,0 +1,50 @@
+eureka:
+    client:
+        service-url:
+            default-zone: http://localhost:8761/eureka/
+        fetch-registry: true
+        register-with-eureka: true
+    instance:
+        hostname: localhost
+        health-check-url-path: /actuator/health
+        status-page-url-path: /actuator/info
+
+ribbon:
+    eureka:
+        enabled: false
+
+server:
+    port: 8080
+
+spring:
+    application:
+        name: api-gateway
+
+zuul:
+    host:
+        connect-timeout-millis: 500000
+        socket-timeout-millis: 500000
+    ignored-services: '*'
+    routes:
+        car-service:
+#            path: /car-service/**
+#            service-id: car-service
+#            strip-prefix: false
+            url: http://localhost:8090
+        moto-service:
+#            path: /moto-service/**
+#            service-id: moto-service
+#            strip-prefix: false
+            url: http://localhost:8091
+
+management:
+  endpoints:
+    web:
+      exposure:
+          include: '*'
+
+logging:
+    level:
+        org:
+            springframework: INFO
+        root: WARN
