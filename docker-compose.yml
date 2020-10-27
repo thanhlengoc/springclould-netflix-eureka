@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  discovery-service:
+    build: ./discovery-service
+    ports:
+      - '8761:8761'
+
+  car-service:
+    build: ./car-service
+    ports:
+      - '8088-8090:8090'
+    environment:
+      EUREKA_SERVER: discovery-service
+    links:
+      - discovery-service
+    depends_on:
+      - discovery-service
+
+  moto-service:
+    build: ./moto-service
+    ports:
+      - '8091:8091'
+    environment:
+      EUREKA_SERVER: discovery-service
+    links:
+      - discovery-service
+      - car-service
+    depends_on:
+      - discovery-service
